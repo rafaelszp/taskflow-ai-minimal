@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  # Aplicação Next.js
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=file:/app/prisma/dev.db
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+      - NEXTAUTH_URL=http://localhost:3000
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - JWT_SECRET=${JWT_SECRET}
+    volumes:
+      - ./prisma/dev.db:/app/prisma/dev.db
+    restart: unless-stopped
+    depends_on:
+      - db
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # Banco de dados SQLite (simulado como um serviço para persistência)
+  db:
+    image: alpine:latest
+    volumes:
+      - ./prisma/dev.db:/dev.db
+    command: >
+      sh -c "tail -f /dev/null"
+    healthcheck:
+      test: ["CMD", "ls", "/dev.db"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # Prisma Studio para gerenciamento visual do banco de dados
+  prisma-studio:
+    image: node:18-alpine
+    depends_on:
+      - db
+    working_dir: /app
+    volumes:
+      - ./prisma:/app/prisma
+      - ./node_modules/.prisma:/app/node_modules/.prisma
+    command: >
+      sh -c "npx prisma studio --port 5555"
+    ports:
+      - "5555:5555"
+    environment:
+      - DATABASE_URL=file:/app/prisma/dev.db
+
+volumes:
+  sqlite_data:

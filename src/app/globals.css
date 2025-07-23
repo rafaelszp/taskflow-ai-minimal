@@ -1,0 +1,321 @@
+/* Minimal CSS Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  margin: 0;
+  padding: 0;
+}
+
+/* Lists */
+ul, ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Forms */
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.25rem;
+  background-color: white;
+}
+
+button,
+select {
+  text-transform: none;
+}
+
+button,
+[type='button'],
+[type='reset'],
+[type='submit'] {
+  -webkit-appearance: button;
+}
+
+button:not(:disabled),
+[type='button']:not(:disabled),
+[type='reset']:not(:disabled),
+[type='submit']:not(:disabled) {
+  cursor: pointer;
+}
+
+/* Remove default select styling */
+select::-ms-expand {
+  display: none;
+}
+
+/* Links */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Images */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Cores básicas usando variáveis CSS nativas */
+    --color-primary: 79, 70, 229;  /* indigo-600 */
+    --color-secondary: 99, 102, 241;  /* indigo-500 */
+    --color-destructive: 239, 68, 68;  /* red-500 */
+    --color-success: 16, 185, 129;  /* emerald-500 */
+    --color-warning: 245, 158, 11;  /* amber-500 */
+    --color-border: 226, 232, 240;  /* slate-200 */
+    --color-input: 226, 232, 240;  /* slate-200 */
+    --color-ring: 99, 102, 241;  /* indigo-500 */
+    --color-background: 255, 255, 255;
+    --color-foreground: 15, 23, 42;  /* slate-900 */
+    --color-muted: 241, 245, 249;  /* slate-100 */
+    --color-muted-foreground: 100, 116, 139;  /* slate-500 */
+    --radius: 0.5rem;
+  }
+  
+  .dark {
+    --color-border: 30, 41, 59;  /* slate-800 */
+    --color-input: 30, 41, 59;  /* slate-800 */
+    --color-background: 15, 23, 42;  /* slate-900 */
+    --color-foreground: 248, 250, 252;  /* slate-50 */
+    --color-muted: 30, 41, 59;  /* slate-800 */
+    --color-muted-foreground: 148, 163, 184;  /* slate-400 */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-gray-200 dark:border-gray-700;
+  }
+  
+  body {
+    @apply bg-white text-gray-900 dark:bg-gray-900 dark:text-white antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Ensure the body takes full viewport height and has proper stacking context */
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+  }
+  
+  ::selection {
+    @apply bg-blue-100 text-blue-900 dark:bg-blue-900/50 dark:text-blue-100;
+  }
+  
+  ::-webkit-scrollbar {
+    @apply w-2 h-2;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-white dark:bg-gray-900;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 dark:bg-gray-600 rounded-full hover:bg-gray-400 dark:hover:bg-gray-500;
+  }
+  
+  *:focus-visible {
+    @apply outline-none ring-2 ring-offset-2 ring-blue-500 ring-offset-white dark:ring-offset-gray-900;
+  }
+  
+  button {
+    @apply focus:outline-none;
+  }
+}
+
+/* Dropdown and Popover Styling */
+[data-radix-popper-content-wrapper] {
+  z-index: 50;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  background-color: white;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  max-height: min(400px, calc(100vh - 2rem));
+  overflow-y: auto;
+  margin: 0.25rem 0;
+}
+
+[data-side="bottom"] {
+  margin-top: 0.5rem;
+}
+
+[data-side="top"] {
+  margin-bottom: 0.5rem;
+}
+
+/* Form Elements */
+input,
+select,
+textarea {
+  border: 1px solid #e2e8f0;
+  border-radius: 0.375rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #93c5fd;
+  box-shadow: 0 0 0 3px rgba(147, 197, 253, 0.5);
+}
+
+/* Buttons */
+button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  border-radius: 0.375rem;
+  transition: all 0.15s ease-in-out;
+}
+
+button:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.5);
+}
+
+@layer components {
+  /* Container */
+  .container {
+    @apply px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full;
+  }
+  
+  /* Typography */
+  .text-display-lg { @apply text-5xl font-bold tracking-tight md:text-6xl lg:text-7xl; }
+  .text-display-md { @apply text-4xl font-bold tracking-tight md:text-5xl; }
+  .text-display-sm { @apply text-3xl font-semibold tracking-tight md:text-4xl; }
+  .text-headline-lg { @apply text-2xl font-semibold md:text-3xl; }
+  .text-headline-md { @apply text-xl font-semibold md:text-2xl; }
+  .text-headline-sm { @apply text-lg font-semibold md:text-xl; }
+  .text-title-lg { @apply text-base font-medium md:text-lg; }
+  .text-title-md { @apply text-sm font-medium md:text-base; }
+  .text-title-sm { @apply text-xs font-medium md:text-sm; }
+  .text-body-lg { @apply text-base md:text-lg; }
+  .text-body-md { @apply text-sm md:text-base; }
+  .text-body-sm { @apply text-xs md:text-sm; }
+  .text-label-lg { @apply text-sm font-medium md:text-base; }
+  .text-label-md { @apply text-xs font-medium md:text-sm; }
+  .text-label-sm { @apply text-[11px] font-medium md:text-xs; }
+  
+  /* Buttons */
+  .btn {
+    @apply inline-flex items-center justify-center rounded-lg text-label-md font-medium transition-colors 
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 
+           focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
+  }
+  
+  .btn-primary { @apply bg-blue-600 text-white hover:bg-blue-700 shadow hover:shadow-md active:shadow-sm; }
+  .btn-secondary { @apply bg-indigo-600 text-white hover:bg-indigo-700 shadow hover:shadow-md active:shadow-sm; }
+  .btn-outline { @apply border border-gray-300 bg-transparent hover:bg-gray-100 text-gray-800 dark:border-gray-600 dark:hover:bg-gray-800 dark:text-white shadow-sm; }
+  .btn-ghost { @apply hover:bg-gray-100 text-gray-800 dark:hover:bg-gray-800 dark:text-white; }
+  .btn-link { @apply text-blue-600 underline-offset-4 hover:underline dark:text-blue-400; }
+  .btn-danger { @apply bg-red-600 text-white hover:bg-red-700 shadow hover:shadow-md active:shadow-sm; }
+  .btn-sm { @apply h-8 px-3 text-label-sm; }
+  .btn-md { @apply h-10 px-4 py-2; }
+  .btn-lg { @apply h-12 px-6 py-3 text-label-lg; }
+  .btn-icon { @apply h-10 w-10 p-0; }
+  
+  /* Cards */
+  .card { @apply rounded-xl border border-gray-200 bg-white text-gray-900 shadow-sm overflow-hidden dark:border-gray-700 dark:bg-gray-800 dark:text-white; }
+  .card-header { @apply p-6 pb-0; }
+  .card-title { @apply text-headline-md mb-1; }
+  .card-description { @apply text-gray-500 text-body-md dark:text-gray-400; }
+  .card-content { @apply p-6 pt-0; }
+  .card-footer { @apply flex items-center p-6 pt-0; }
+  
+  /* Forms */
+  .form-group { @apply space-y-2; }
+  .form-label { @apply text-label-md font-medium; }
+  .form-hint { @apply text-gray-500 text-label-sm dark:text-gray-400; }
+  .form-error { @apply text-red-600 text-label-sm dark:text-red-400; }
+  
+  .input {
+    @apply flex h-10 w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-body-md 
+           placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 
+           focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50
+           dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400;
+  }
+  
+  .input-error {
+    @apply border-red-500 focus:ring-red-500/50;
+  }
+  
+  /* Alerts */
+  .alert {
+    @apply relative w-full rounded-lg border p-4 [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg+div]:translate-y-[-3px] [&>svg~*]:pl-8;
+  }
+  
+  .alert-info { @apply bg-blue-50 text-blue-900 border-blue-200 dark:bg-blue-900/20 dark:text-blue-100 dark:border-blue-800; }
+  .alert-success { @apply bg-green-50 text-green-900 border-green-200 dark:bg-green-900/20 dark:text-green-100 dark:border-green-800; }
+  .alert-warning { @apply bg-amber-50 text-amber-900 border-amber-200 dark:bg-amber-900/20 dark:text-amber-100 dark:border-amber-800; }
+  .alert-destructive { @apply bg-red-50 text-red-900 border-red-200 dark:bg-red-900/20 dark:text-red-100 dark:border-red-800; }
+  
+  /* Badges */
+  .badge {
+    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
+  }
+  
+  .badge-primary { @apply bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-200; }
+  .badge-secondary { @apply bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200; }
+  .badge-destructive { @apply bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-200; }
+  .badge-outline { @apply border border-gray-300 bg-transparent text-gray-800 dark:border-gray-600 dark:text-gray-200; }
+  
+  /* Tabs */
+  .tabs-list {
+    @apply inline-flex h-10 items-center justify-center rounded-md bg-gray-100 p-1 dark:bg-gray-800;
+  }
+  
+  .tabs-trigger {
+    @apply inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-medium 
+           transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 
+           focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 
+           data-[state=active]:bg-white data-[state=active]:text-gray-900 data-[state=active]:shadow-sm
+           dark:data-[state=active]:bg-gray-700 dark:data-[state=active]:text-white;
+  }
+  
+  .tabs-content {
+    @apply mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 
+           focus-visible:ring-blue-500 focus-visible:ring-offset-2;
+  }
+}
